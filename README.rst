@@ -7,4 +7,4 @@ It is less than alpha.
 License
 -------
 
-See LICENSE
+See `LICENSE <./LICENSE>`_
