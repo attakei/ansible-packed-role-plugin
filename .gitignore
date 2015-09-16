@@ -59,3 +59,5 @@ target/
 # pyenv
 .python-version
 
+# generated roles
+tests/roles/*/main.yml

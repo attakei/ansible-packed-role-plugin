@@ -4,10 +4,19 @@ import shutil
 from ansible.constants import DEFAULT_ROLES_PATH
 
 
+def create_role_dir(expand_role_dir):
+    """If expand_role_dir is not exist, create it.
+    """
+    if os.path.exists(expand_role_dir):
+        return
+    os.makedirs(expand_role_dir)
+
+
 def expand_role(packed_role_path):
     """Create role struct folders from packed role.
     """
-    expand_path = packed_role_path
+    expand_role_dir, _ = os.path.splitext(packed_role_path)
+    create_role_dir(expand_role_dir)
 
 
 class CallbackModule(object):
