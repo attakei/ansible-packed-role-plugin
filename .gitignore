@@ -60,5 +60,5 @@ target/
 .python-version
 
 # generated roles
-tests/roles/*/main.yml
+tests/roles/*/*/main.yml
 samples/roles/*/
