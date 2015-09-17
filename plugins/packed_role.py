@@ -28,7 +28,7 @@ def expand_role(packed_role_path):
 
 
 class CallbackModule(object):
-    CALLBACK_VERSION = 1.0
+    CALLBACK_VERSION = 0.1
     CALLBACK_TYPE = 'stdout'
     CALLBACK_NAME = 'packed_role'
 
