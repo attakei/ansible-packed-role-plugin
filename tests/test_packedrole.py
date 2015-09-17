@@ -35,10 +35,19 @@ class ExpandRoleTests(unittest.TestCase):
             shutil.rmtree(item) 
     
     def test_create_directory(self):
-        test_simple_path = os.path.join(here, 'roles', 'test_simple.yml')
-        test_simple_dir = os.path.join(here, 'roles', 'test_simple')
+        test_simple_path = os.path.join(here, 'roles', 'simple.yml')
+        test_simple_dir = os.path.join(here, 'roles', 'simple')
 
         expand_role(test_simple_path)
 
         self.assertTrue(os.path.exists(test_simple_dir))
         self.assertTrue(os.path.exists(os.path.join(test_simple_dir, 'tasks', 'main.yml')))
+
+    def test_not_create_needless_directory(self):
+        test_simple_path = os.path.join(here, 'roles', 'with_comment.yml')
+        test_simple_dir = os.path.join(here, 'roles', 'with_comment')
+
+        expand_role(test_simple_path)
+
+        self.assertTrue(os.path.exists(test_simple_dir))
+        self.assertFalse(os.path.exists(os.path.join(test_simple_dir, 'comments')))
