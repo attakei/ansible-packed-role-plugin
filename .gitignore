@@ -61,3 +61,5 @@ target/
 
 # generated roles
 tests/roles/*/main.yml
+samples/roles/test_simple
+tests/roles/test_simple

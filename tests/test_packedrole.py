@@ -30,8 +30,9 @@ class ExpandRoleTests(unittest.TestCase):
     def setUp(self):
         # clean up dest folder
         for item in glob.iglob(os.path.join(here, 'roles', '*')):
-            if os.path.isdir(item):
-                shutil.rmtree(item) 
+            if not os.path.isdir(item):
+                continue
+            shutil.rmtree(item) 
     
     def test_create_directory(self):
         test_simple_path = os.path.join(here, 'roles', 'test_simple.yml')
@@ -40,3 +41,4 @@ class ExpandRoleTests(unittest.TestCase):
         expand_role(test_simple_path)
 
         self.assertTrue(os.path.exists(test_simple_dir))
+        self.assertTrue(os.path.exists(os.path.join(test_simple_dir, 'tasks', 'main.yml')))
