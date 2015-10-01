@@ -1,0 +1,7 @@
+comments: |
+  It is role-comment. Plugin does not refer to this section.
+tasks:
+  - debug: msg="here we are in the role, foo={{foo}}"
+files:
+  testfile.txt: |
+      Hello world.

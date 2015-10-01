@@ -21,10 +21,14 @@ def expand_role(packed_role_path):
     import yaml
     with open(packed_role_path) as fp:
         role = yaml.load(fp)
+    # tasks
     tasks_dir = os.path.join(expand_role_dir, 'tasks')
     os.makedirs(tasks_dir)
     with open(os.path.join(tasks_dir, 'main.yml'), 'w') as fp:
         fp.write(yaml.dump(role.get('tasks', {})))
+    # files
+    tasks_dir = os.path.join(expand_role_dir, 'files')
+    os.makedirs(tasks_dir)
 
 
 class CallbackModule(object):

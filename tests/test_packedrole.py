@@ -51,3 +51,20 @@ class ExpandRoleTests(unittest.TestCase):
 
         self.assertTrue(os.path.exists(test_simple_dir))
         self.assertFalse(os.path.exists(os.path.join(test_simple_dir, 'comments')))
+
+
+class OutputFilesFromPackedRolesTests(unittest.TestCase):
+    def setUp(self):
+        # clean up dest folder
+        for item in glob.iglob(os.path.join(here, 'roles', '*')):
+            if not os.path.isdir(item):
+                continue
+            shutil.rmtree(item) 
+    
+    def test_create_directory(self):
+        test_simple_path = os.path.join(here, 'roles', 'with_files.yml')
+        test_simple_dir = os.path.join(here, 'roles', 'with_files/files')
+
+        expand_role(test_simple_path)
+
+        self.assertTrue(os.path.exists(test_simple_dir))
