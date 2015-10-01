@@ -64,7 +64,14 @@ class OutputFilesFromPackedRolesTests(unittest.TestCase):
     def test_create_directory(self):
         test_simple_path = os.path.join(here, 'roles', 'with_files.yml')
         test_simple_dir = os.path.join(here, 'roles', 'with_files/files')
+        test_simple_file = os.path.join(here, 'roles', 'with_files/files/testfile.txt')
 
         expand_role(test_simple_path)
 
         self.assertTrue(os.path.exists(test_simple_dir))
+        self.assertTrue(os.path.exists(test_simple_file))
+        with open(test_simple_file) as fp:
+            content = \
+                'Hello world.\n' \
+                'Test'
+            self.assertEqual(fp.read(), content)

@@ -5,3 +5,4 @@ tasks:
 files:
   testfile.txt: |
       Hello world.
+      Test
