@@ -23,11 +23,7 @@ def expand_role(packed_role_path):
     expand_role_yaml(role, expand_role_dir, 'tasks')
     expand_role_yaml(role, expand_role_dir, 'vars')
     # files
-    files_dir = os.path.join(expand_role_dir, 'files')
-    create_role_dir(files_dir)
-    for filename, content in role.get('files', {}).items():
-        with open(os.path.join(files_dir, filename), 'w') as fp:
-            fp.write(content)
+    expand_role_files(role, expand_role_dir, 'files')
 
 
 def expand_role_yaml(packed_role, expand_role_dir, name):
@@ -38,6 +34,17 @@ def expand_role_yaml(packed_role, expand_role_dir, name):
     # Output main.yml
     with open(os.path.join(target_dir, 'main.yml'), 'w') as fp:
         fp.write(yaml.safe_dump(target_vars, default_flow_style=False))
+
+
+def expand_role_files(packed_role, expand_role_dir, name):
+    target_dir = os.path.join(expand_role_dir, name)
+    target_vars = packed_role.get(name, {})
+    # Generate diretory
+    create_role_dir(target_dir)
+    # Output files
+    for filename, content in target_vars.items():
+        with open(os.path.join(target_dir, filename), 'w') as fp:
+            fp.write(content)
 
 
 class CallbackModule(object):

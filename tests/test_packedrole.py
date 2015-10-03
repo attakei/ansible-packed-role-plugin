@@ -44,6 +44,11 @@ class ExpandRoleTests(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(test_simple_dir, 'tasks', 'main.yml')))
         self.assertTrue(os.path.exists(os.path.join(test_simple_dir, 'vars', 'main.yml')))
 
+        try:
+            expand_role(test_simple_path)
+        except Exception as err:
+            self.fail('error occurred' + err.message)
+
     def test_not_create_needless_directory(self):
         test_simple_path = os.path.join(here, 'roles', 'with_comment.yml')
         test_simple_dir = os.path.join(here, 'roles', 'with_comment')
