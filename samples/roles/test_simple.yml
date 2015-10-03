@@ -1,3 +1,7 @@
+vars:
+  bar: sample
 tasks:
   - name: debugging
     debug: msg="here we are in the role, foo={{foo}}"
+  - name: debugging 2
+    debug: msg="here we are in the role, foo={{bar}}"

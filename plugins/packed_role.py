@@ -1,7 +1,5 @@
 # from ansible.plugins.callback import CallbackBase
 import os
-import shutil
-from ansible.constants import DEFAULT_ROLES_PATH
 import yaml
 
 
