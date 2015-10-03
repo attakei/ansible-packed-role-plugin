@@ -39,7 +39,7 @@ def expand_role_yaml(packed_role, expand_role_dir, name):
     create_role_dir(target_dir)
     # Output main.yml
     with open(os.path.join(target_dir, 'main.yml'), 'w') as fp:
-        fp.write(yaml.dump(target_vars))
+        fp.write(yaml.safe_dump(target_vars, default_flow_style=False))
 
 
 class CallbackModule(object):
