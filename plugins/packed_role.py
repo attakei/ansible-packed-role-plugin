@@ -1,9 +1,11 @@
 # from ansible.plugins.callback import CallbackBase
+__version__ = '0.1'
+
 import os
 import yaml
 
 
-def create_role_dir(expand_role_dir):
+def mkdir_if_not_exists(expand_role_dir):
     """If expand_role_dir is not exist, create it.
     """
     if os.path.exists(expand_role_dir):
@@ -15,7 +17,7 @@ def expand_role(packed_role_path):
     """Create role struct folders from packed role.
     """
     expand_role_dir, _ = os.path.splitext(packed_role_path)
-    create_role_dir(expand_role_dir)
+    mkdir_if_not_exists(expand_role_dir)
     # generate_tasks(expand_role_dir)
     with open(packed_role_path) as fp:
         role = yaml.load(fp)
@@ -30,7 +32,7 @@ def expand_role_yaml(packed_role, expand_role_dir, name):
     target_dir = os.path.join(expand_role_dir, name)
     target_vars = packed_role.get(name, {})
     # Generate diretory
-    create_role_dir(target_dir)
+    mkdir_if_not_exists(target_dir)
     # Output main.yml
     with open(os.path.join(target_dir, 'main.yml'), 'w') as fp:
         fp.write(yaml.safe_dump(target_vars, default_flow_style=False))
@@ -40,7 +42,7 @@ def expand_role_files(packed_role, expand_role_dir, name):
     target_dir = os.path.join(expand_role_dir, name)
     target_vars = packed_role.get(name, {})
     # Generate diretory
-    create_role_dir(target_dir)
+    mkdir_if_not_exists(target_dir)
     # Output files
     for filename, content in target_vars.items():
         with open(os.path.join(target_dir, filename), 'w') as fp:
@@ -48,7 +50,7 @@ def expand_role_files(packed_role, expand_role_dir, name):
 
 
 class CallbackModule(object):
-    CALLBACK_VERSION = 0.1
+    CALLBACK_VERSION = __version__
     CALLBACK_TYPE = 'stdout'
     CALLBACK_NAME = 'packed_role'
 

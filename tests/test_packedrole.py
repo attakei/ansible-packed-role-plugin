@@ -14,8 +14,8 @@ class CreateRoleDirTests(unittest.TestCase):
         shutil.rmtree(self.target_dir, ignore_errors=True)
     
     def _callFUT(self, target):
-        from packed_role import create_role_dir
-        create_role_dir(target)
+        from packed_role import mkdir_if_not_exists
+        mkdir_if_not_exists(target)
     
     def test_it(self):
         self._callFUT(self.target_dir)
