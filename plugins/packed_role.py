@@ -26,7 +26,7 @@ def expand_role(packed_role_path):
     expand_role_yaml(role, expand_role_dir, 'vars')
     # files
     files_dir = os.path.join(expand_role_dir, 'files')
-    os.makedirs(files_dir)
+    create_role_dir(files_dir)
     for filename, content in role.get('files', {}).items():
         with open(os.path.join(files_dir, filename), 'w') as fp:
             fp.write(content)
@@ -36,7 +36,7 @@ def expand_role_yaml(packed_role, expand_role_dir, name):
     target_dir = os.path.join(expand_role_dir, name)
     target_vars = packed_role.get(name, {})
     # Generate diretory
-    os.makedirs(target_dir)
+    create_role_dir(target_dir)
     # Output main.yml
     with open(os.path.join(target_dir, 'main.yml'), 'w') as fp:
         fp.write(yaml.dump(target_vars))
