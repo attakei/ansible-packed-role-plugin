@@ -18,9 +18,13 @@ def expand_role(packed_role_path):
     """
     expand_role_dir, _ = os.path.splitext(packed_role_path)
     mkdir_if_not_exists(expand_role_dir)
-    # generate_tasks(expand_role_dir)
-    with open(packed_role_path) as fp:
-        role = yaml.load(fp)
+    # Load packed role
+    try:
+        with open(packed_role_path) as fp:
+            role = yaml.load(fp)
+    except Exception as err:
+        print(err.message)
+        role = {}
     # Directories should be output main.yml
     expand_role_yaml(role, expand_role_dir, 'tasks')
     expand_role_yaml(role, expand_role_dir, 'handlers')

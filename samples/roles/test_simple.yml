@@ -1,3 +1,6 @@
+comment: |
+  It is a comment.
+  If plugin is run by playbook, this section is not outputed!
 vars:
   bar: sample
 tasks:
