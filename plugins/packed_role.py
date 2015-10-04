@@ -24,8 +24,9 @@ def expand_role(packed_role_path):
     # Directories should be output main.yml
     expand_role_yaml(role, expand_role_dir, 'tasks')
     expand_role_yaml(role, expand_role_dir, 'vars')
-    # files
+    # Directories should be output raw files
     expand_role_files(role, expand_role_dir, 'files')
+    expand_role_files(role, expand_role_dir, 'templates')
 
 
 def expand_role_yaml(packed_role, expand_role_dir, name):

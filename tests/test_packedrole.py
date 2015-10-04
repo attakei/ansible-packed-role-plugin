@@ -81,3 +81,18 @@ class OutputFilesFromPackedRolesTests(unittest.TestCase):
                 'Hello world.\n' \
                 'Test'
             self.assertEqual(fp.read(), content)
+
+    def test_create_templates_directory_and_file(self):
+        test_simple_path = os.path.join(here, 'roles', 'with_templates.yml')
+        test_simple_dir = os.path.join(here, 'roles', 'with_templates/templates')
+        test_simple_file = os.path.join(here, 'roles', 'with_templates/templates/testfile.txt.j2')
+
+        expand_role(test_simple_path)
+
+        self.assertTrue(os.path.exists(test_simple_dir))
+        self.assertTrue(os.path.exists(test_simple_file))
+        with open(test_simple_file) as fp:
+            content = \
+                'Hello world. {{ foo }}\n' \
+                'Test\n'
+            self.assertEqual(fp.read(), content)
