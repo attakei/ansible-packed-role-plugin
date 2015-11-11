@@ -71,6 +71,8 @@ class CallbackModule(object):
         # Expand to role folder all.
         packed_role_dir = os.path.join(self.playbook.basedir, 'roles')
         for role in all_roles:
+            if type(role) is dict:
+                role = role['role']
             packed_role_path = os.path.join(packed_role_dir, role) + '.yml'
             if os.path.exists(packed_role_path):
                 print('Found packed role: {}'.format(packed_role_path))
