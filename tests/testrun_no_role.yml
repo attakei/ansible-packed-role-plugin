@@ -1,0 +1,4 @@
+- hosts: all
+  connection: localhost
+  tasks:
+    - command: date
