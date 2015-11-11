@@ -2,7 +2,7 @@ import os
 import unittest
 import glob
 import shutil
-from packed_role import expand_role
+from packed_role import expand_role, CallbackModule
 
 
 here = os.path.dirname(os.path.abspath(__file__))
@@ -96,3 +96,57 @@ class OutputFilesFromPackedRolesTests(unittest.TestCase):
                 'Hello world. {{ foo }}\n' \
                 'Test\n'
             self.assertEqual(fp.read(), content)
+
+
+def _cleanup_dest_dir():
+    # clean up dest folder
+    for item in glob.iglob(os.path.join(here, 'roles', '*')):
+        if not os.path.isdir(item):
+            continue
+        shutil.rmtree(item) 
+
+def _init_playbook(path):
+    from ansible.playbook import PlayBook
+    from ansible.inventory import Inventory
+    from ansible import callbacks
+    from ansible import utils
+
+    inventory = Inventory(os.path.join(here, 'test_hosts'))
+    
+    stats = callbacks.AggregateStats()
+    playbook_cb = callbacks.PlaybookCallbacks(verbose=utils.VERBOSITY)
+    runner_cb = callbacks.PlaybookRunnerCallbacks(stats, verbose=utils.VERBOSITY)
+    
+    playbook = PlayBook(
+        playbook=os.path.join(path),
+        inventory=inventory,
+        callbacks=playbook_cb,
+        runner_callbacks=runner_cb,
+        stats=stats)
+    return playbook
+
+
+def test_role_as_dict():
+    """If not used role, plugin must be raised error.
+    """
+    _cleanup_dest_dir()
+    playbook = _init_playbook(os.path.join(here, 'testrun_no_role.yml'))
+    result = playbook.run()
+    assert type(result) == dict
+
+
+def test_role_as_str():
+    """Case of use  string
+    """
+    _cleanup_dest_dir()
+    playbook = _init_playbook(os.path.join(here, 'testrun_str_role.yml'))
+    result = playbook.run()
+    assert type(result) == dict
+
+def test_role_as_dict():
+    """Case of use dictionary instead  of string
+    """
+    _cleanup_dest_dir()
+    playbook = _init_playbook(os.path.join(here, 'testrun_dict_role.yml'))
+    result = playbook.run()
+    assert type(result) == dict
